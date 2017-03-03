@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.xxx.dao.ShopCURD">
+<resultMap id="BaseShop" type="Shop">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="shop_num" property="shopNum" jdbcType="INTEGER" />
+		<result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+		<result column="shop_many" property="shopMany" jdbcType="INTEGER" />
+	</resultMap>
+
+
+<select id="selectShop" resultMap="BaseShop" parameterType="com.xxx.model.Shop">
+		select
+		id,shop_num,shop_name,shop_many
+		from shop
+	</select>
+<update id="updateShop" parameterType="com.xxx.model.Shop">    
+    	update shop set shop_num=#{shopNum:INTEGER},shop_name=#{shopName:VARCHAR},shop_many=#{shopNum:INTEGER} 
+    	where id=#{id:INTEGER}
+    </update>
+
+
+</mapper>
+
