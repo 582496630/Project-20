@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>商品信息</title>
 <script src="script/common.js"></script>
+<script src="script/jquery.min.js"></script>
 <script type="text/javascript">
 	function addShop() {
 		window.location.href = ctx + "/pages/addShop.jsp";
@@ -15,7 +16,10 @@
 		window.location.href = ctx + "/pages/selectShop.do";
 	}
 function updateShop() {
-	var id = '${shop.id}',
+	var id =$('#id').val();
+	var username = $('#username').val();
+	
+	
 	$.ajax({
 		type : "POST",
 		async : true,
@@ -25,11 +29,11 @@ function updateShop() {
 		},
 		error : function() {
 			hideLoadingDialog();
-			showmsg("登录异常");
+			showmsg("修改失败");
 		},
-		success : function(res) {
+		success : function(data) {
 
-				showmsg("恭喜你，登录成功！");
+			window.location.href = ctx + "/pages/updateShop.jsp";
 		}
 	});
 	
@@ -60,10 +64,10 @@ function updateShop() {
 				<td>${shop.shopNum}</td>
 				<td>${shop.shopName}</td>
 				<td>${shop.shopMany}</td>
-				<td><input type="button" value="updateShop" onclick="updateShop()" /></td>
+				<td><input type="button" value="update" onclick="updateShop()" /></td>
 				<td><a href="deleteShop.do?id=${shop.id}">delete</a>
 				</td>
-					
+					<td><input type="text"  name="id" id="id" value="${shop.id}"  /></td>
 			</tr>
 		</c:forEach>
 

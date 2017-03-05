@@ -84,7 +84,7 @@ public class SmiShopInfoService implements ISmiShopInfoService {
 		} finally {
 			session.close();
 		}
-		return shopVO;
+		return null;
 	}
 	
 

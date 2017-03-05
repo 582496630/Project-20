@@ -96,22 +96,28 @@ public class ShopInfoAction {
 	
 	// updateShop的controller
 	@RequestMapping(value = "/updateShop1.do")
-	public String updateShop1(@RequestParam Integer id,Model model) {
+	public  @ResponseBody ModelAndView updateShop1(HttpServletRequest request, HttpServletResponse response,
+			Integer id,Model model) {
 		
 		//smiShopInfoService.updateShop(id);
+		Integer id1 = id;
+		//model.addAttribute("idList", id);
 		
-		model.addAttribute("idList", id);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("id", id);
+		modelAndView.setViewName("updateShop");
 		
 		System.out.println("updateShop1成功");
-		return "updateShop";
+		return modelAndView;
+		
 	}
-	@RequestMapping(value = "/updateShop2.do?*")
-	public String updateShop2(@RequestParam Integer id,ShopVO shopVO) {
+	@RequestMapping(value = "/updateShop2.do")
+	public String updateShop2(Integer id,ShopVO shopVO) {
 		
 		smiShopInfoService.updateShop(id,shopVO);
 		
 		System.out.println("updateShop2成功");
-		return "updateShop";
+		return "selectShop";
 	}
 
 	

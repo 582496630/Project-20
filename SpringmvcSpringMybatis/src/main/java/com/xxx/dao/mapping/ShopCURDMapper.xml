@@ -17,8 +17,11 @@
 		from shop
 	</select>
 <update id="updateShop" parameterType="com.xxx.model.Shop">    
-    	update shop set shop_num=#{shopNum:INTEGER},shop_name=#{shopName:VARCHAR},shop_many=#{shopNum:INTEGER} 
+    	update shop set shop_num=#{shopNum:INTEGER},shop_name='#{shopName:VARCHAR}',shop_many=#{shopMany:INTEGER} 
     	where id=#{id:INTEGER}
+    	
+    	<!-- update shop set shop_num=#{shopNum,jdbcType=INTEGER},shop_name=#{shopName,jdbcType=VARCHAR},shop_many=#{shopMany,jdbcType=INTEGER} 
+    	where id=#{id,jdbcType=INTEGER} -->
     </update>
 
 
