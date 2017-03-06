@@ -47,7 +47,7 @@ $("#btnLogin").click(function() {
 				setLocalStorage("shopInfo", JSON.stringify(res));
 				
 				//添加登录后跳转页面的代码
-				window.location.href = ctx+"/pages/selectShop.do";
+				window.location.href = ctx+"/pages/selectShop.jsp";
 
 				showmsg("恭喜你，登录成功！");
 

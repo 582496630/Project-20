@@ -45,7 +45,7 @@ function updateShop() {
 </head>
 <body>
 <form action="updateShop2.do" method="post">
-<h3>ID:${id}</h3>
+<h3>ID:${list}</h3>
 <input type="text"  name="id" id="id"/>
 <table>
 <tr>

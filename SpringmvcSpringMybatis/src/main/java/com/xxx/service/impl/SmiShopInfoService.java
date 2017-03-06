@@ -75,17 +75,35 @@ public class SmiShopInfoService implements ISmiShopInfoService {
 	
 	//更新
 	
-	public ShopVO updateShop(Integer id,ShopVO shopVO){
+	public ShopVO updateShop(ShopVO shopVO){
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
-			shopCURD.updateShop(id, shopVO);
+			shopCURD.updateShop(shopVO);
 			session.commit();
 		} finally {
 			session.close();
 		}
 		return null;
 	}
+	
+	
+	
+	//删除一个
+	public void deleteShop(Integer id){
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+			shopCURD.deleteShop(id);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		
+		
+	}
+	
+	
 	
 
 

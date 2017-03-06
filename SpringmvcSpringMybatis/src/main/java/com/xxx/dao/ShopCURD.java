@@ -21,6 +21,7 @@ public interface ShopCURD {
 	public List<Shop> selectShop(Shop shop);
 	
 	
-	public int updateShop(Integer id,ShopVO shopVO);
+	public void updateShop(ShopVO shopVO);
 	
+	public void deleteShop(Integer id);
 }

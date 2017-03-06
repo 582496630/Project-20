@@ -17,8 +17,6 @@
 	}
 function updateShop() {
 	var id =$('#id').val();
-	var username = $('#username').val();
-	
 	
 	$.ajax({
 		type : "POST",
@@ -38,6 +36,36 @@ function updateShop() {
 	});
 	
 }
+
+/* 
+function deleteShop(){
+    obj = document.getElementsById("id");
+    id_val = [];
+    for(k in obj){
+        if(obj[k].checked)
+            id_val.push(obj[k].value);
+    }
+	var id =id_val;
+	
+	$.ajax({
+		type : "POST",
+		async : true,
+		url : ctx + "/pages/deleteShop.do",
+		data : {
+			"id" : id,
+		},
+		error : function() {
+			hideLoadingDialog();
+			showmsg("删除失败");
+		},
+		success : function() {
+
+			window.location.href = ctx + "/pages/selectShop.jsp";
+			
+		}
+	});
+	
+} */
 </script>
 
 </head>
@@ -54,6 +82,7 @@ function updateShop() {
 			<td>shop_name</td>
 			<td>shop_many</td>
 			<td colspan="2">操作</td>
+			<td><input type="button" value="delete" onclick="deleteShop()" /></td>
 		</tr>
 
 		<c:forEach var="shop" items="${list}" varStatus="vs">
@@ -65,9 +94,9 @@ function updateShop() {
 				<td>${shop.shopName}</td>
 				<td>${shop.shopMany}</td>
 				<td><input type="button" value="update" onclick="updateShop()" /></td>
-				<td><a href="deleteShop.do?id=${shop.id}">delete</a>
-				</td>
-					<td><input type="text"  name="id" id="id" value="${shop.id}"  /></td>
+					<%-- <td><input type="text"  name="id" id="id" value="${shop.id}"  /></td> --%>
+			<%-- <td><input  type="checkbox" id="id" value="${shop.id}" ></td> --%>
+			<td><a href="deleteShop?id=${shop.id}">delete</a></td>
 			</tr>
 		</c:forEach>
 

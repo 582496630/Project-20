@@ -1,5 +1,6 @@
 package com.xxx.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -104,23 +106,34 @@ public class ShopInfoAction {
 		//model.addAttribute("idList", id);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("id", id);
+		List<Integer> list = new ArrayList<>();
+		list.add(id);
+		modelAndView.addObject("list", list);
 		modelAndView.setViewName("updateShop");
 		
 		System.out.println("updateShop1成功");
 		return modelAndView;
 		
 	}
-	@RequestMapping(value = "/updateShop2.do")
-	public String updateShop2(Integer id,ShopVO shopVO) {
+	@RequestMapping(value = "/updateShop2.do" , method = {RequestMethod.POST})
+	public String updateShop2(ShopVO shopVO) {
 		
-		smiShopInfoService.updateShop(id,shopVO);
+		smiShopInfoService.updateShop(shopVO);
 		
 		System.out.println("updateShop2成功");
 		return "selectShop";
 	}
 
 	
+	@RequestMapping(value = "/deleteShop.do?*")
+	
+	public String  deleteShop(@RequestParam  Integer id){
+		//@RequestParam  Integer id
+		smiShopInfoService.deleteShop(id);
+		System.out.println("deleteShop成功");
+		
+		return "selectShop";
+	}
 	
 
 }

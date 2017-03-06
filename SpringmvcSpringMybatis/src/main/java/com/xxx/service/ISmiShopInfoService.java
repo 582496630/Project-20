@@ -31,5 +31,8 @@ public interface ISmiShopInfoService {
 	
 	
 	//更改增加商品的方法
-	public ShopVO updateShop(Integer id,ShopVO shopVO);
+	public ShopVO updateShop(ShopVO shopVO);
+	
+	//删除一个商品的方法
+	public void deleteShop(Integer id);
 }
