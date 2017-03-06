@@ -9,6 +9,10 @@
 </head>
 <body>
 <div>
+<a href="addShop.jsp">add</a>
+<a href="update.jsp">update</a>
+<a href="selectShop.action">select</a>
+
 		<p>产品详情</p>
 		<table border="1">
 			<tr>

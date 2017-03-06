@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
         <property name="context-root" value="springmvcspringmybatis-1"/>
         <property name="java-output-path" value="/springmvcspringmybatis-1/target/classes"/>
     </wb-module>
