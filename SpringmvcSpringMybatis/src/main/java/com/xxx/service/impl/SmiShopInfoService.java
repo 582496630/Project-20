@@ -44,67 +44,81 @@ public class SmiShopInfoService implements ISmiShopInfoService {
 		return shopInfoMapper.getByNoAndPwd(password, shopNo);
 	}
 	
-	//添加商品的方法
-	public ShopVO addShop(ShopVO shopVO){
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
-			shopCURD.addShop(shopVO);
-			session.commit();
-		} finally {
-			session.close();
+	// 添加 商品的方法
+		public ShopVO addShop(ShopVO shopVO) {
+			SqlSession session = sqlSessionFactory.openSession();
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				shopCURD.addShop(shopVO);
+				session.commit();
+			} finally {
+				session.close();
+			}
+			return shopVO;
 		}
-		return shopVO;
-	}
-	
-	//查找商品的方法
-	//,Integer id,Integer shopNum,String shopName,Integer shopMany
-	public List<Shop> selectShop(Shop shop){
-		SqlSession session = sqlSessionFactory.openSession();
-		
-		try {
-			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
-			List<Shop>	shopList = shopCURD.selectShop(shop);
-		
-			return shopList;
-	} finally {
-		session.close();
-	}
-	}
-	
-	
-	//更新
-	
-	public ShopVO updateShop(ShopVO shopVO){
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
-			shopCURD.updateShop(shopVO);
-			session.commit();
-		} finally {
-			session.close();
-		}
-		return null;
-	}
-	
-	
-	
-	//删除一个
-	public void deleteShop(Integer id){
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			ShopCURD shopCURD = session.getMapper(ShopCURD.class);
-			shopCURD.deleteShop(id);
-			session.commit();
-		} finally {
-			session.close();
-		}
-		
-		
-	}
-	
-	
-	
 
+		// 查找 商品的方法
+		public List<Shop> selectShop(Shop shop) {
+			SqlSession session = sqlSessionFactory.openSession();
 
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				List<Shop> shopList = shopCURD.selectShop(shop);
+
+				return shopList;
+			} finally {
+				session.close();
+			}
+		}
+
+		public List<Integer> selectByIdShop(Integer id) {
+			SqlSession session = sqlSessionFactory.openSession();
+
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				List<Integer> shopList = shopCURD.selectByIdShop(id);
+
+				return shopList;
+			} finally {
+				session.close();
+			}
+		}
+
+		// 更新
+
+		public ShopVO updateShop(ShopVO shopVO) {
+			SqlSession session = sqlSessionFactory.openSession();
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				shopCURD.updateShop(shopVO);
+				session.commit();
+			} finally {
+				session.close();
+			}
+			return null;
+		}
+
+		// 删除一个
+		public void deleteShop(Integer id) {
+			SqlSession session = sqlSessionFactory.openSession();
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				shopCURD.deleteShop(id);
+				session.commit();
+			} finally {
+				session.close();
+			}
+		}
+
+		// 批量删除
+		public void deleteAllShop(List<Integer> idList) {
+			SqlSession session = sqlSessionFactory.openSession();
+			try {
+				ShopCURD shopCURD = session.getMapper(ShopCURD.class);
+				shopCURD.deleteAllShop(idList);
+				session.commit();
+			} finally {
+				session.close();
+			}
+		}
 }

@@ -9,12 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 影院店铺信息表
- * 
- * @author author
- * @date 2016/02/16
- */
+
 @Component
 @JsonSerialize
 @Setter

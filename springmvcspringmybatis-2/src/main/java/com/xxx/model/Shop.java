@@ -1,10 +1,7 @@
-package com.xxx.controller.valueobject;
+package com.xxx.model;
 
+import java.io.Serializable;
 import java.util.List;
-
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,13 +12,14 @@ import lombok.Setter;
  * @author author
  * @date 2016/02/16
  */
-@Component
-@JsonSerialize
 @Setter
 @Getter
-public class ShopVO{
+public class Shop implements Serializable {
+
+	private static final long serialVersionUID = -205189814706545519L;
 
 	private List<Integer> idList;
+	
 	private Integer id;
 
 	private String shopNum;

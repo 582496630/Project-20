@@ -18,6 +18,7 @@ public interface ShopCURD {
 	/*@Select("SELECT id,shop_num,shop_name,shop_many from shop")
 	public List<Shop> selectShop(Shop shop);*/
 
+	
 	public List<Shop> selectShop(Shop shop);
 	public List<Integer> selectByIdShop(Integer id);
 	public void updateShop(ShopVO shopVO);

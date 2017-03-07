@@ -72,68 +72,69 @@ public class ShopInfoAction {
 
 	}
 
-	// addShop的controller
-	@RequestMapping(value = "/pages/addShop.do")
-	public String addShop(ShopVO shopVO) {
-		smiShopInfoService.addShop(shopVO);
+	// addShop的controller 添加shop
+		@RequestMapping(value = "pages/addShop.action")
+		public String addShop(ShopVO shopVO) {
+			smiShopInfoService.addShop(shopVO);
 
-		System.out.println("添加shop成功");
-		return "selectShop";
+			System.out.println("添加shop成功");
+			return "select";
 
-	}
+		}
 
-	// selectShop
-	@RequestMapping(value = "/pages/selectShop.do")
-	public ModelAndView selectShop(Shop shop, HttpServletRequest request, HttpServletResponse response) {
+		// selectShop 查找数据库内所有shop
+		@RequestMapping(value = "pages/selectShop.action")
+		public ModelAndView selectShop(Shop shop, HttpServletRequest request, HttpServletResponse response) {
 
-		List<Shop> list = smiShopInfoService.selectShop(shop);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", list);
-		modelAndView.setViewName("selectShop");
-		// model.addAttribute("selectList", list);
-		// model.addAllAttributes(list);
-		System.out.println("selectShop方法运行成功");
-		return modelAndView;
-	}
-	
-	// updateShop的controller
-	@RequestMapping(value = "/updateShop1.do")
-	public  @ResponseBody ModelAndView updateShop1(HttpServletRequest request, HttpServletResponse response,
-			Integer id,Model model) {
-		
-		//smiShopInfoService.updateShop(id);
-		Integer id1 = id;
-		//model.addAttribute("idList", id);
-		
-		ModelAndView modelAndView = new ModelAndView();
-		List<Integer> list = new ArrayList<>();
-		list.add(id);
-		modelAndView.addObject("list", list);
-		modelAndView.setViewName("updateShop");
-		
-		System.out.println("updateShop1成功");
-		return modelAndView;
-		
-	}
-	@RequestMapping(value = "/updateShop2.do" , method = {RequestMethod.POST})
-	public String updateShop2(ShopVO shopVO) {
-		
-		smiShopInfoService.updateShop(shopVO);
-		
-		System.out.println("updateShop2成功");
-		return "selectShop";
-	}
+			List<Shop> list = smiShopInfoService.selectShop(shop);
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.addObject("allShopList", list);
+			modelAndView.setViewName("select");
+			// model.addAttribute("selectList", list);
+			// model.addAllAttributes(list);
+			System.out.println("selectShop方法运行成功");
+			return modelAndView;
+		}
 
-	
-	@RequestMapping(value = "/deleteShop.do?*")
-	
-	public String  deleteShop(@RequestParam  Integer id){
-		//@RequestParam  Integer id
-		smiShopInfoService.deleteShop(id);
-		System.out.println("deleteShop成功");
-		
-		return "selectShop";
-	}
-	
+		// updateShop的controller 获取前端id值并跳转到update.jsp页面
+		@RequestMapping(value = "/pages/updateShop1?*")
+		public String updateShop1(@RequestParam Integer id, Model model) {
+
+			List<Integer> list = smiShopInfoService.selectByIdShop(id);
+			model.addAttribute("idList", id);
+			model.addAttribute("shop", list);
+			System.out.println("updateShop1成功");
+			return "update";
+
+		}
+
+		// 更改数据库的内容
+		@RequestMapping(value = "/pages/updateShop2.action", method = { RequestMethod.POST })
+		public String updateShop2(ShopVO shopVO) {
+
+			smiShopInfoService.updateShop(shopVO);
+			System.out.println("updateShop2成功");
+			return "select";
+		}
+
+		// 更加id删除数据库内容
+		@RequestMapping(value = "/pages/deleteShop?*")
+		public String deleteShop(@RequestParam Integer id) {
+			smiShopInfoService.deleteShop(id);
+			System.out.println("deleteShop成功");
+			return "select";
+		}
+
+		// 获取前端checkbox 选中的值，实现批量删除
+		@RequestMapping(value = "/pages/deleteAllShop")
+		public String deleteAllShop(@RequestParam("checkboxName") List<Integer> idList) {
+			if (idList.size() > 0) {
+				smiShopInfoService.deleteAllShop(idList);
+				System.out.println("deleteAllShop成功");
+			} else {
+				System.out.println("deleteAllShop无数据可删！");
+			}
+			return "select";
+		}
 
 }

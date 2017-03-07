@@ -1,6 +1,7 @@
 package com.xxx.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class Shop implements Serializable {
 
 	private static final long serialVersionUID = -205189814706545519L;
 
+	private List<Integer> idList;
 	private Integer id;
 
 	private String shopNum;
@@ -24,6 +26,5 @@ public class Shop implements Serializable {
 	private String shopName;
 
 	private String shopMany;
-
 
 }
