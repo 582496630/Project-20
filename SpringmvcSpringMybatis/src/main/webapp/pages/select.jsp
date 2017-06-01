@@ -10,13 +10,12 @@
 <body>
 <div>
 <a href="addShop.jsp">add</a>
-<a href="update.jsp">update</a>
 <a href="selectShop.action">select</a>
 <form action="deleteAllShop.action" method="post" name="checkboxName">
 		<p>产品详情</p>
 		<table border="1">
 			<tr>
-			<td></td>
+			<td>   &nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>序号</td>
 				<td>id</td>
 				<td>shopName</td>
@@ -26,7 +25,6 @@
 				<td>修改</td>
 
 			</tr>
-
 			<c:forEach var="shop" items="${allShopList}" varStatus="vs">
 				<tr>
 					<!-- vs.count  计数 -->
