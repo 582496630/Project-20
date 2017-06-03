@@ -1,4 +1,5 @@
 /classes/
 *.class
 **/target/*
-.classpath
+/*/*.classpath
+*/*.classpath
