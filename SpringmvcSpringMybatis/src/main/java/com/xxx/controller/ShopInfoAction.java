@@ -126,8 +126,11 @@ public class ShopInfoAction {
 
 		// 获取前端checkbox 选中的值，实现批量删除
 		@RequestMapping(value = "/pages/deleteAllShop")
-		public String deleteAllShop(@RequestParam("checkboxName") List<Integer> idList) {
-			if (idList.size() > 0) {
+		//required=false，当前端没有选中任何一个checkbox的时候， 就是赋值给checkboxName 为null
+		//默认required=true  就是前端必须传值给checkboxName，否则就报错；及必须选中至少一个的checkbox
+		public String deleteAllShop(@RequestParam(value="checkboxName",required=false) List<Integer> idList) {
+			//当idList为null的时候，会报错“空指针异常”，所以要先判断排除idList不是null
+			if (idList != null) {
 				smiShopInfoService.deleteAllShop(idList);
 				System.out.println("deleteAllShop成功");
 			} else {
