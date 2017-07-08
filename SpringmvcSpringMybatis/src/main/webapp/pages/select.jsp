@@ -25,6 +25,7 @@
 				<td>修改</td>
 
 			</tr>
+			
 			<c:forEach var="shop" items="${allShopList}" varStatus="vs">
 				<tr>
 					<!-- vs.count  计数 -->

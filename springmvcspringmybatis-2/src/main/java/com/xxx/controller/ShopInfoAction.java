@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,6 @@ import com.xxx.service.ISmiShopInfoService;
 @Controller
 public class ShopInfoAction {
 
-	private Logger logger = Logger.getLogger(this.getClass());
 
 	// spring注入服务层接口
 	@Autowired
