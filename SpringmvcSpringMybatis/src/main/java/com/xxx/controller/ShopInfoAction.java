@@ -1,6 +1,8 @@
 package com.xxx.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,9 @@ import com.xxx.controller.valueobject.ShopVO;
 import com.xxx.model.Shop;
 import com.xxx.model.SmiShopInfo;
 import com.xxx.service.ISmiShopInfoService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 影院店铺信息action
@@ -72,71 +77,94 @@ public class ShopInfoAction {
 	}
 
 	// addShop的controller 添加shop
-		@RequestMapping(value = "pages/addShop.action")
-		public String addShop(ShopVO shopVO) {
-			smiShopInfoService.addShop(shopVO);
+	@RequestMapping(value = "pages/addShop.action")
+	public String addShop(ShopVO shopVO) {
+		smiShopInfoService.addShop(shopVO);
 
-			System.out.println("添加shop成功");
-			return "select";
+		System.out.println("添加shop成功");
+		return "select";
 
+	}
+
+	// selectShop 查找数据库内所有shop
+	@RequestMapping(value = "pages/selectShop")
+	public ModelAndView selectShop(Shop shop, HttpServletRequest request, HttpServletResponse response) {
+
+		List<Shop> list = smiShopInfoService.selectShop(shop);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("allShopList", list);
+		modelAndView.setViewName("select");
+		// model.addAttribute("selectList", list);
+		// model.addAllAttributes(list);
+		System.out.println("selectShop方法运行成功");
+		return modelAndView;
+	}
+
+	// updateShop的controller 获取前端id值并跳转到update.jsp页面
+	@RequestMapping(value = "/pages/updateShop1?*")
+	public String updateShop1(@RequestParam Integer id, Model model) {
+
+		List<Integer> list = smiShopInfoService.selectByIdShop(id);
+		model.addAttribute("idList", id);
+		model.addAttribute("shop", list);
+		System.out.println("updateShop1成功");
+		return "update";
+
+	}
+
+	// 更改数据库的内容
+	@RequestMapping(value = "/pages/updateShop2.action", method = { RequestMethod.POST })
+	public String updateShop2(ShopVO shopVO) {
+
+		smiShopInfoService.updateShop(shopVO);
+		System.out.println("updateShop2成功");
+		return "select";
+	}
+
+	// 更加id删除数据库内容
+	@RequestMapping(value = "/pages/deleteShop?*")
+	public String deleteShop(@RequestParam Integer id) {
+		smiShopInfoService.deleteShop(id);
+		System.out.println("deleteShop成功");
+		return "select";
+	}
+
+	// 获取前端checkbox 选中的值，实现批量删除
+	@RequestMapping(value = "/pages/deleteAllShop")
+	// required=false，当前端没有选中任何一个checkbox的时候， 就是赋值给checkboxName 为null
+	// 默认required=true 就是前端必须传值给checkboxName，否则就报错；及必须选中至少一个的checkbox
+	public String deleteAllShop(@RequestParam(value = "checkboxName", required = false) List<Integer> idList) {
+		// 当idList为null的时候，会报错“空指针异常”，所以要先判断排除idList不是null
+		if (idList != null) {
+			smiShopInfoService.deleteAllShop(idList);
+			System.out.println("deleteAllShop成功");
+		} else {
+			System.out.println("deleteAllShop无数据可删！");
 		}
+		return "select";
+	}
 
-		// selectShop 查找数据库内所有shop
-		@RequestMapping(value = "pages/selectShop.action")
-		public ModelAndView selectShop(Shop shop, HttpServletRequest request, HttpServletResponse response) {
+	// 采用EasyUI为前端框架返回JSON数据，对应页面为view.html
+	public JSONObject result;
 
-			List<Shop> list = smiShopInfoService.selectShop(shop);
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.addObject("allShopList", list);
-			modelAndView.setViewName("select");
-			// model.addAttribute("selectList", list);
-			// model.addAllAttributes(list);
-			System.out.println("selectShop方法运行成功");
-			return modelAndView;
-		}
+	@RequestMapping(value = "pages/shopview")
+	@ResponseBody
+	public JSONArray shopview(Shop shop) {
 
-		// updateShop的controller 获取前端id值并跳转到update.jsp页面
-		@RequestMapping(value = "/pages/updateShop1?*")
-		public String updateShop1(@RequestParam Integer id, Model model) {
+		// 两种常用的转换成json的方式
+		List<Shop> list = smiShopInfoService.selectShop(shop);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("total", 4);
+		obj.put("rows", list);
+		result = JSONObject.fromObject(obj);
+		System.out.println(result);
 
-			List<Integer> list = smiShopInfoService.selectByIdShop(id);
-			model.addAttribute("idList", id);
-			model.addAttribute("shop", list);
-			System.out.println("updateShop1成功");
-			return "update";
+		JSONArray jsonArray = new JSONArray();
+		jsonArray = net.sf.json.JSONArray.fromObject(list);
+		// String rtn = "{'tital':"+4+",'rows':"+jsonArray;
+		System.out.println(jsonArray);
 
-		}
-
-		// 更改数据库的内容
-		@RequestMapping(value = "/pages/updateShop2.action", method = { RequestMethod.POST })
-		public String updateShop2(ShopVO shopVO) {
-
-			smiShopInfoService.updateShop(shopVO);
-			System.out.println("updateShop2成功");
-			return "select";
-		}
-
-		// 更加id删除数据库内容
-		@RequestMapping(value = "/pages/deleteShop?*")
-		public String deleteShop(@RequestParam Integer id) {
-			smiShopInfoService.deleteShop(id);
-			System.out.println("deleteShop成功");
-			return "select";
-		}
-
-		// 获取前端checkbox 选中的值，实现批量删除
-		@RequestMapping(value = "/pages/deleteAllShop")
-		//required=false，当前端没有选中任何一个checkbox的时候， 就是赋值给checkboxName 为null
-		//默认required=true  就是前端必须传值给checkboxName，否则就报错；及必须选中至少一个的checkbox
-		public String deleteAllShop(@RequestParam(value="checkboxName",required=false) List<Integer> idList) {
-			//当idList为null的时候，会报错“空指针异常”，所以要先判断排除idList不是null
-			if (idList != null) {
-				smiShopInfoService.deleteAllShop(idList);
-				System.out.println("deleteAllShop成功");
-			} else {
-				System.out.println("deleteAllShop无数据可删！");
-			}
-			return "select";
-		}
+		return jsonArray;
+	}
 
 }
