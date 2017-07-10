@@ -1,6 +1,7 @@
 package com.xxx.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xxx.controller.valueobject.ShopVO;
 import com.xxx.model.Shop;
@@ -28,6 +29,10 @@ public interface ISmiShopInfoService {
 
 	// 查找增加商品的方法
 	public List<Shop> selectShop(Shop shop);
+	//EasyUI对应的查找方法
+	public List<Shop> selectShopView(Map<String, Object> shopViewMap);
+	//查找总共的数据有多少
+	public long getTotal(Map<String, Object> shopViewMap);
 
 	// 根据id查找，用于更新时获取现有的值
 	public List<Integer> selectByIdShop(Integer id);

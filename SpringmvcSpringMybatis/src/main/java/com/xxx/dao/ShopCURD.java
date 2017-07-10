@@ -1,6 +1,7 @@
 package com.xxx.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,9 @@ public interface ShopCURD {
 	public void updateShop(ShopVO shopVO);
 	public void deleteShop(Integer id);
 	public void deleteAllShop(@Param("idList") List<Integer> idList);
+
+	//EasyUI对应的查找方法
+	public List<Shop> selectShopView(Map<String, Object> shopViewMap);
+	//查找总共的数据有多少
+	public long getTotal(Map<String, Object> shopViewMap);
 }

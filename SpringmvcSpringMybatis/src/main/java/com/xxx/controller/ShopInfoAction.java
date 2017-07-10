@@ -19,11 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xxx.controller.valueobject.ShopInfoVO;
 import com.xxx.controller.valueobject.ShopVO;
+import com.xxx.model.Page;
 import com.xxx.model.Shop;
 import com.xxx.model.SmiShopInfo;
 import com.xxx.service.ISmiShopInfoService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -149,22 +149,34 @@ public class ShopInfoAction {
 
 	@RequestMapping(value = "pages/shopview")
 	@ResponseBody
-	public JSONArray shopview(Shop shop) {
+	public JSONObject shopview(@RequestParam(value="page", required=false) String page, 
+            @RequestParam(value="rows", required=false) String rows,Shop shop) {
 
+		//获取前端的page当前是第几页   rows一页显示多少行，并赋值给Page的对象，存起来
+		Page pageBean = new Page(Integer.parseInt(page), Integer.parseInt(rows));
+        Map<String, Object> reMap = new HashMap<>();          
+        Map<String, Object> paraMap = new HashMap<>();          
+        //把前端获取的值（条件）放到map中
+        paraMap.put("firstPage", pageBean.getFirstPage());
+        paraMap.put("rows", pageBean.getRows());
+		
+		//通过map去查找数据库的值，SQL对应的是带limit的
+		List<Shop> list = smiShopInfoService.selectShopView(paraMap);
+		//查出有多少条数据，
+		long total = smiShopInfoService.getTotal(paraMap);
+		reMap.put("total", total);//必须，总数据条数
+		reMap.put("rows", list);//查出的数据list
 		// 两种常用的转换成json的方式
-		List<Shop> list = smiShopInfoService.selectShop(shop);
-		Map<String, Object> obj = new HashMap<String, Object>();
-		obj.put("total", 4);
-		obj.put("rows", list);
-		result = JSONObject.fromObject(obj);
+		result = JSONObject.fromObject(reMap);
 		System.out.println(result);
 
-		JSONArray jsonArray = new JSONArray();
+/*		
+  		JSONArray jsonArray = new JSONArray();
 		jsonArray = net.sf.json.JSONArray.fromObject(list);
 		// String rtn = "{'tital':"+4+",'rows':"+jsonArray;
-		System.out.println(jsonArray);
+		System.out.println(jsonArray);*/
 
-		return jsonArray;
+		return result;
 	}
 
 }

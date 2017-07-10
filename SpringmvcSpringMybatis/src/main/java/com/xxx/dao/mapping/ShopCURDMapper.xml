@@ -3,7 +3,7 @@
 
 
 <mapper namespace="com.xxx.dao.ShopCURD">
-<resultMap id="BaseShop" type="Shop">
+	<resultMap id="BaseShop" type="com.xxx.model.Shop">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="shop_num" property="shopNum" jdbcType="INTEGER" />
 		<result column="shop_name" property="shopName" jdbcType="VARCHAR" />
@@ -11,7 +11,7 @@
 	</resultMap>
 
 
-<!-- 查找所有shop -->
+	<!-- 查找所有shop -->
 	<select id="selectShop" resultMap="BaseShop" parameterType="com.xxx.model.Shop">
 		select
 		id,shop_num,shop_name,shop_many
@@ -23,16 +23,17 @@
 		id,shop_num,shop_name,shop_many
 		from shop where id=#{id}
 	</select>
-<!-- 根据id更改数据 -->
+	<!-- 根据id更改数据 -->
 	<update id="updateShop" parameterType="com.xxx.controller.valueobject.ShopVO">
 		update shop set
 		shop_num=#{shopNum},shop_name=#{shopName},shop_many=#{shopMany}
-		where id=#{id}
+		where
+		id=#{id}
 	</update>
 
 	<!-- 删除单个 -->
 	<delete id="deleteShop" parameterType="int">
-		delete from shop where 
+		delete from shop where
 		id=#{id}
 	</delete>
 	<!-- 根据idList批量删除 -->
@@ -48,6 +49,18 @@
 			</where>
 		</if>
 	</delete>
+
+<!-- EasyUI对应的查找方法 -->
+	<select id="selectShopView" parameterType="map" resultType="map">
+		select
+		id,shop_num,shop_name,shop_many
+		from shop limit #{firstPage}, #{rows};
+	</select>
+	<!-- 查找总共的数据有多少 -->
+	<select id="getTotal" parameterType="map" resultType="long">
+		select count(id) from shop
+	</select>
+
 
 
 </mapper>

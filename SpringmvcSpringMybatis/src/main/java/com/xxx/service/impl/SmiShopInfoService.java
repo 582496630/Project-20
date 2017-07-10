@@ -1,6 +1,7 @@
 package com.xxx.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -121,4 +122,21 @@ public class SmiShopInfoService implements ISmiShopInfoService {
 				session.close();
 			}
 		}
+		
+		//EasyUI对应的查找方法
+		public List<Shop> selectShopView(Map<String, Object> shopViewMap){
+			
+			List<Shop> shopList = shopCURD.selectShopView(shopViewMap);
+			
+			return shopList;
+		}
+		//查找总共的数据有多少
+		public long getTotal(Map<String, Object> shopViewMap){
+			
+			long shopTotal = shopCURD.getTotal(shopViewMap);
+			
+			return shopTotal;
+		}
+		
+		
 }
